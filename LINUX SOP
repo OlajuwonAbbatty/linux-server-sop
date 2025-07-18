@@ -1,0 +1,133 @@
+# Standard Operating Procedure  
+**Company Name:** WebTech Solutions Ltd.  
+**Company Address:** 123 Innovation Drive, Winnipeg, MB  
+**Department Phone Number:** (204) 555-TECH  
+
+---
+
+## Revision Info  
+- **Version:** 1.0  
+- **Date:** 2025-07-18  
+- **Author:** Olajuwon Abbatty  
+
+---
+
+## Approval Table  
+| Version | Date       | Name                | Designation       |
+|---------|------------|---------------------|-------------------|
+| 1.0     | 2025-07-18 | Olajuwon Abbatty    | Author            |
+| 1.1     | TBD        | Sarah Williams      | Reviewer          |
+| 1.2     | TBD        | Michael Lee         | Approver          |
+
+---
+
+## Purpose  
+This document provides a standard procedure for setting up a virtual Linux server for web application testing. It ensures consistency, reliability, and readiness of the environment used in developing and testing web-based applications.
+
+---
+
+## Scope  
+This SOP applies to all developers, QA engineers, and system administrators involved in web application testing. It is intended to be followed whenever a new test server is needed for development or QA purposes.
+
+### Objectives  
+- Create a consistent Linux-based test environment  
+- Set up essential software (LAMP stack)  
+- Ensure basic security and networking are properly configured  
+- Document steps for reproducibility  
+
+---
+
+## Accountability Matrix  
+| Task                             | Responsible         | Reviewer          | Approver       |
+|----------------------------------|---------------------|-------------------|----------------|
+| VM Creation                      | System Administrator | IT Supervisor     | Ops Manager    |
+| OS and Package Installation      | Developer           | DevOps Lead       | IT Manager     |
+| Networking & Security Setup      | System Administrator | Security Analyst  | QA Manager     |
+| SOP Documentation & Updates      | Author              | Reviewer          | Approver       |
+
+---
+
+## Definitions  
+- **VM**: Virtual Machine  
+- **ISO**: A disk image file used to install an operating system  
+- **SSH**: Secure Shell, a protocol for secure remote login  
+- **UFW**: Uncomplicated Firewall, a tool for managing firewall rules on Ubuntu  
+- **LAMP Stack**: Linux, Apache, MySQL, PHP – a common environment for hosting web applications  
+
+---
+
+## Procedure Steps  
+
+### Step 1: Create the Virtual Machine  
+- Use a hypervisor (e.g., VMware, VirtualBox, Hyper-V)  
+- Configuration example:  
+  - **OS:** Ubuntu Server 22.04 LTS  
+  - **Hostname:** `webtest-server`  
+  - **RAM:** 2–4 GB  
+  - **CPU:** 2 cores  
+  - **Disk:** 20 GB  
+- Mount the Ubuntu ISO image and boot the VM to begin installation.
+
+---
+
+### Step 2: Install and Configure Ubuntu  
+- Follow the Ubuntu Server installation wizard  
+- Create a user with sudo privileges  
+- Configure a static IP address (optional)  
+- Ensure OpenSSH server is selected during installation if remote access is needed
+
+---
+
+### Step 3: Update and Upgrade the System  
+After installation, log in and update the system:
+sudo apt update && sudo apt upgrade -y
+
+### Step 4: Install Web Server and Database (LAMP Stack)
+Install Apache, MySQL, PHP:
+sudo apt install apache2 mysql-server php libapache2-mod-php php-mysql -y
+
+Enable services to start at boot:
+sudo systemctl enable apache2
+sudo systemctl enable mysql
+
+### Step 5: Deploy a Test Application
+Create a simple PHP test file:
+sudo nano /var/www/html/index.php
+Add the following code:
+<?php phpinfo(); ?>
+
+Save and exit (CTRL+O, Enter, CTRL+X)
+Open your browser and go to http://<your-server-ip> to confirm the PHP server is working.
+
+### Step 6: Configure Firewall and Security
+Allow web traffic:
+sudo ufw allow 'Apache Full'
+sudo ufw enable
+
+Secure the MySQL installation:
+sudo mysql_secure_installation
+
+Check and confirm UFW status:
+sudo ufw status
+
+### Step 7: Final Verification
+Confirm Apache and MySQL services are running:
+sudo systemctl status apache2
+sudo systemctl status mysql
+
+
+Use SSH to test remote connectivity (if configured)
+
+Document IP address, login credentials, and software versions used
+
+Reference or Related Documents
+Ubuntu Server Documentation
+
+Apache HTTP Server Guide
+
+MySQL Secure Installation
+
+PHP Manual
+
+UFW Guide
+
